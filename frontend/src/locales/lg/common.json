@@ -1,0 +1,37 @@
+{
+  "hero_title": "Enkola Ennungi ez'Okulima mu Uganda",
+  "hero_description": "Omubeezi w'okulima akozesa AI okuwa amagezi agatuufu eri abalimi ba Uganda",
+  "get_started": "Tandika",
+  
+  "disease_diagnosis": "Okuzuula Endwadde",
+  "disease_diagnosis_description": "Zuula endwadde z'ebimera mangu nga okozesa AI okukebera ebifaananyi",
+  
+  "weather_forecast": "Embeera y'Obudde",
+  "weather_forecast_description": "Funa okulagula kw'obudde okw'ekitundu kyo n'amagezi g'okulima",
+  
+  "market_prices": "Ebipimo by'Obutale",
+  "market_prices_description": "Goberera ebipimo by'obutale era okwatagane n'abaguzi",
+  
+  "sms_support": "Obuyambi bwa SMS",
+  "sms_support_description": "Kozesa empeereza zaffe okuyita mu SMS - tewetaaga internet",
+  
+  "cta_title": "Wegatte ku Nkumi z'Abalimi",
+  "cta_description": "Tandika okulongoosa amakungula go n'amagezi agava mu data",
+  "register_now": "Wewandise Kati",
+  "learn_more": "Yiga Ebisingawo",
+  
+  "home": "Awaka",
+  "disease_diagnosis": "Okuzuula Endwadde",
+  "weather": "Obudde",
+  "market_prices": "Ebipimo by'Obutale",
+  "farming_tips": "Amagezi g'Okulima",
+  
+  "about_us": "Ebitufaako",
+  "about_description": "AgroGPT Uganda kye kifo ekikozesa AI okuyamba abalimi okukola okusalawo okulungi nga bakozesa tekinologiya ne data.",
+  "quick_links": "Enyungiro Ennyangu",
+  "contact_us": "Tutukirire",
+  "privacy_policy": "Amateeka g'Obukuumi",
+  "terms_of_service": "Amateeka g'Empeereza",
+  "contact_info": "Amawulire g'Okutukirira",
+  "all_rights_reserved": "Obuyinza bwonna bukuumiddwa."
+} 
