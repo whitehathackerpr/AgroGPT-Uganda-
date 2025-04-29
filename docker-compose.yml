@@ -8,42 +8,37 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/agrogpt_uganda
-      - REDIS_URL=redis://redis:6379
-      - DEBUG=True
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/agrogpt
+      - WEATHER_API_KEY=${WEATHER_API_KEY}
+    volumes:
+      - ./backend:/app
+      - ml_models:/app/ml/models
     depends_on:
       - db
-      - redis
 
   frontend:
-    build:
+    build: 
       context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:8000
-    depends_on:
-      - backend
 
   db:
-    image: postgres:14
-    ports:
-      - "5432:5432"
+    image: postgres:13
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=agrogpt_uganda
+      - POSTGRES_DB=agrogpt
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
-  redis:
-    image: redis:6
     ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
+      - "5432:5432"
 
 volumes:
   postgres_data:
-  redis_data: 
+  ml_models: 

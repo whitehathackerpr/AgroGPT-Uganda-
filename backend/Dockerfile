@@ -16,7 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Create necessary directories
-RUN mkdir -p /app/data /app/ml/models
+RUN mkdir -p app/ml/models app/config
 
 # Expose the port
 EXPOSE 8000

@@ -3,16 +3,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-// Import screens
+// Screens
 import HomeScreen from './src/screens/HomeScreen';
 import DiseaseScreen from './src/screens/DiseaseScreen';
 import WeatherScreen from './src/screens/WeatherScreen';
 import MarketScreen from './src/screens/MarketScreen';
-import SettingsScreen from './src/screens/SettingsScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
-const App = () => {
+export default function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
@@ -20,7 +20,7 @@ const App = () => {
           initialRouteName="Home"
           screenOptions={{
             headerStyle: {
-              backgroundColor: '#22c55e', // green-600
+              backgroundColor: '#16a34a',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -49,14 +49,12 @@ const App = () => {
             options={{ title: 'Market Prices' }}
           />
           <Stack.Screen 
-            name="Settings" 
-            component={SettingsScreen}
-            options={{ title: 'Settings' }}
+            name="Profile" 
+            component={ProfileScreen}
+            options={{ title: 'My Profile' }}
           />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
   );
-};
-
-export default App; 
+} 

@@ -6,25 +6,21 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
-  ScrollView,
+  Alert,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from 'axios';
 
 const DiseaseScreen = () => {
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<{
-    disease: string;
-    confidence: number;
-    treatment: string;
-  } | null>(null);
+  const [result, setResult] = useState<string | null>(null);
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     
     if (status !== 'granted') {
-      alert('Sorry, we need camera roll permissions to make this work!');
+      Alert.alert('Permission needed', 'Please grant camera roll permissions to use this feature.');
       return;
     }
 
@@ -37,6 +33,7 @@ const DiseaseScreen = () => {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      setResult(null);
       analyzePlant(result.assets[0].uri);
     }
   };
@@ -45,7 +42,7 @@ const DiseaseScreen = () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     
     if (status !== 'granted') {
-      alert('Sorry, we need camera permissions to make this work!');
+      Alert.alert('Permission needed', 'Please grant camera permissions to use this feature.');
       return;
     }
 
@@ -57,169 +54,166 @@ const DiseaseScreen = () => {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      setResult(null);
       analyzePlant(result.assets[0].uri);
     }
   };
 
   const analyzePlant = async (imageUri: string) => {
     setLoading(true);
-    setResult(null);
-
     try {
-      // TODO: Implement API call to backend for disease diagnosis
-      // Mock response for now
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setResult({
-        disease: 'Leaf Blight',
-        confidence: 0.92,
-        treatment: 'Apply copper-based fungicide and ensure proper air circulation between plants.',
+      // Create form data
+      const formData = new FormData();
+      formData.append('image', {
+        uri: imageUri,
+        type: 'image/jpeg',
+        name: 'plant.jpg',
+      } as any);
+
+      // Send to backend
+      const response = await axios.post('http://localhost:8000/api/analyze-disease', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
+
+      setResult(response.data.diagnosis);
     } catch (error) {
-      alert('Error analyzing image. Please try again.');
+      Alert.alert('Error', 'Failed to analyze the image. Please try again.');
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Plant Disease Diagnosis</Text>
-        <Text style={styles.subtitle}>
-          Take or upload a photo of your plant to identify potential diseases
-        </Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Plant Disease Diagnosis</Text>
+      <Text style={styles.description}>
+        Take or upload a photo of your plant to identify potential diseases
+      </Text>
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={takePhoto}>
-            <Icon name="camera" size={24} color="#fff" />
-            <Text style={styles.buttonText}>Take Photo</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.button} onPress={pickImage}>
-            <Icon name="image" size={24} color="#fff" />
-            <Text style={styles.buttonText}>Upload Photo</Text>
-          </TouchableOpacity>
-        </View>
-
-        {image && (
-          <View style={styles.imageContainer}>
-            <Image source={{ uri: image }} style={styles.image} />
-          </View>
-        )}
-
-        {loading && (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#22c55e" />
-            <Text style={styles.loadingText}>Analyzing image...</Text>
-          </View>
-        )}
-
-        {result && (
-          <View style={styles.resultContainer}>
-            <Text style={styles.resultTitle}>Diagnosis Result</Text>
-            <Text style={styles.diseaseText}>
-              Disease: {result.disease}
-            </Text>
-            <Text style={styles.confidenceText}>
-              Confidence: {(result.confidence * 100).toFixed(1)}%
-            </Text>
-            <Text style={styles.treatmentTitle}>Recommended Treatment:</Text>
-            <Text style={styles.treatmentText}>{result.treatment}</Text>
+      <View style={styles.imageContainer}>
+        {image ? (
+          <Image source={{ uri: image }} style={styles.image} />
+        ) : (
+          <View style={styles.placeholder}>
+            <Text style={styles.placeholderText}>No image selected</Text>
           </View>
         )}
       </View>
-    </ScrollView>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={takePhoto}>
+          <Text style={styles.buttonText}>Take Photo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={pickImage}>
+          <Text style={styles.buttonText}>Pick Image</Text>
+        </TouchableOpacity>
+      </View>
+
+      {loading && (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#16a34a" />
+          <Text style={styles.loadingText}>Analyzing image...</Text>
+        </View>
+      )}
+
+      {result && (
+        <View style={styles.resultContainer}>
+          <Text style={styles.resultTitle}>Diagnosis:</Text>
+          <Text style={styles.resultText}>{result}</Text>
+        </View>
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
-  },
-  content: {
-    padding: 20,
+    padding: 16,
+    backgroundColor: '#f9fafb',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 8,
     color: '#1f2937',
-    textAlign: 'center',
   },
-  subtitle: {
+  description: {
     fontSize: 16,
-    color: '#4b5563',
-    textAlign: 'center',
-    marginTop: 8,
+    color: '#6b7280',
     marginBottom: 24,
+  },
+  imageContainer: {
+    width: '100%',
+    height: 300,
+    marginBottom: 24,
+    borderRadius: 12,
+    overflow: 'hidden',
+    backgroundColor: '#e5e7eb',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  placeholder: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    fontSize: 16,
+    color: '#9ca3af',
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginBottom: 24,
   },
   button: {
-    backgroundColor: '#22c55e',
+    backgroundColor: '#16a34a',
     padding: 16,
-    borderRadius: 12,
-    flexDirection: 'row',
+    borderRadius: 8,
+    width: '48%',
     alignItems: 'center',
-    minWidth: 150,
-    justifyContent: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
-    marginLeft: 8,
-  },
-  imageContainer: {
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-  image: {
-    width: 300,
-    height: 225,
-    borderRadius: 12,
   },
   loadingContainer: {
+    marginTop: 24,
     alignItems: 'center',
-    marginVertical: 24,
   },
   loadingText: {
-    marginTop: 12,
+    marginTop: 8,
     fontSize: 16,
-    color: '#4b5563',
+    color: '#6b7280',
   },
   resultContainer: {
-    backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 12,
     marginTop: 24,
+    padding: 16,
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   resultTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    marginBottom: 16,
-  },
-  diseaseText: {
-    fontSize: 18,
-    color: '#ef4444',
-    marginBottom: 8,
-  },
-  confidenceText: {
-    fontSize: 16,
-    color: '#4b5563',
-    marginBottom: 16,
-  },
-  treatmentTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#1f2937',
     marginBottom: 8,
+    color: '#1f2937',
   },
-  treatmentText: {
+  resultText: {
     fontSize: 16,
     color: '#4b5563',
     lineHeight: 24,
