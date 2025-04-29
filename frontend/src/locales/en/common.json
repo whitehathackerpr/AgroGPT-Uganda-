@@ -1,0 +1,37 @@
+{
+  "hero_title": "Smart Farming Solutions for Uganda",
+  "hero_description": "AI-powered agricultural assistant providing localized insights for Ugandan farmers",
+  "get_started": "Get Started",
+  
+  "disease_diagnosis": "Disease Diagnosis",
+  "disease_diagnosis_description": "Identify plant diseases instantly with our AI-powered image analysis",
+  
+  "weather_forecast": "Weather Forecast",
+  "weather_forecast_description": "Get accurate local weather predictions and farming recommendations",
+  
+  "market_prices": "Market Prices",
+  "market_prices_description": "Track real-time market prices and connect with buyers",
+  
+  "sms_support": "SMS Support",
+  "sms_support_description": "Access our services via SMS - no internet required",
+  
+  "cta_title": "Join Thousands of Farmers",
+  "cta_description": "Start improving your farm's productivity with data-driven insights",
+  "register_now": "Register Now",
+  "learn_more": "Learn More",
+  
+  "home": "Home",
+  "disease_diagnosis": "Disease Diagnosis",
+  "weather": "Weather",
+  "market_prices": "Market Prices",
+  "farming_tips": "Farming Tips",
+  
+  "about_us": "About Us",
+  "about_description": "AgroGPT Uganda is an AI-powered platform helping farmers make better decisions through technology and data.",
+  "quick_links": "Quick Links",
+  "contact_us": "Contact Us",
+  "privacy_policy": "Privacy Policy",
+  "terms_of_service": "Terms of Service",
+  "contact_info": "Contact Info",
+  "all_rights_reserved": "All rights reserved."
+} 
