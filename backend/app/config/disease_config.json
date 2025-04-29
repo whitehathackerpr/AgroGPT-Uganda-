@@ -1,0 +1,46 @@
+{
+    "disease_info": {
+        "Maize_Leaf_Blight": {
+            "name": "Maize Leaf Blight",
+            "scientific_name": "Exserohilum turcicum",
+            "symptoms": "Long, elliptical gray-green or tan lesions on leaves",
+            "treatment": "Apply fungicides containing mancozeb or chlorothalonil",
+            "prevention": "Crop rotation, resistant varieties, proper field drainage"
+        },
+        "Coffee_Leaf_Rust": {
+            "name": "Coffee Leaf Rust",
+            "scientific_name": "Hemileia vastatrix",
+            "symptoms": "Yellow-orange powdery spots on leaf undersides",
+            "treatment": "Apply copper-based fungicides",
+            "prevention": "Plant resistant varieties, proper spacing, good air circulation"
+        },
+        "Banana_Black_Sigatoka": {
+            "name": "Black Sigatoka",
+            "scientific_name": "Mycosphaerella fijiensis",
+            "symptoms": "Black streaks on leaves that develop into large spots",
+            "treatment": "Regular fungicide application, remove infected leaves",
+            "prevention": "Good drainage, proper spacing, resistant varieties"
+        },
+        "Cassava_Mosaic": {
+            "name": "Cassava Mosaic Disease",
+            "scientific_name": "Cassava mosaic virus",
+            "symptoms": "Yellow mottling of leaves, leaf distortion",
+            "treatment": "Remove and destroy infected plants",
+            "prevention": "Use disease-free planting material, resistant varieties"
+        },
+        "Bean_Rust": {
+            "name": "Bean Rust",
+            "scientific_name": "Uromyces appendiculatus",
+            "symptoms": "Rusty brown spots on leaves and pods",
+            "treatment": "Apply fungicides, remove infected plants",
+            "prevention": "Crop rotation, resistant varieties, proper spacing"
+        }
+    },
+    "class_mapping": {
+        "0": "Maize_Leaf_Blight",
+        "1": "Coffee_Leaf_Rust",
+        "2": "Banana_Black_Sigatoka",
+        "3": "Cassava_Mosaic",
+        "4": "Bean_Rust"
+    }
+} 

@@ -5,9 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  useWindowDimensions,
+  Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -16,64 +15,70 @@ type RootStackParamList = {
   Disease: undefined;
   Weather: undefined;
   Market: undefined;
-  Settings: undefined;
+  Profile: undefined;
 };
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 const HomeScreen = () => {
   const navigation = useNavigation<NavigationProp>();
-  const { width } = useWindowDimensions();
 
-  const menuItems = [
+  const features = [
     {
       title: 'Disease Diagnosis',
-      icon: 'microscope',
+      description: 'Identify plant diseases with AI',
       screen: 'Disease',
-      color: '#ef4444', // red-500
+      icon: '🌱',
     },
     {
       title: 'Weather Forecast',
-      icon: 'weather-partly-cloudy',
+      description: 'Get local weather updates',
       screen: 'Weather',
-      color: '#3b82f6', // blue-500
+      icon: '☀️',
     },
     {
       title: 'Market Prices',
-      icon: 'chart-line',
+      description: 'Track crop prices',
       screen: 'Market',
-      color: '#f59e0b', // amber-500
-    },
-    {
-      title: 'Settings',
-      icon: 'cog',
-      screen: 'Settings',
-      color: '#6b7280', // gray-500
+      icon: '💰',
     },
   ];
 
   return (
     <ScrollView style={styles.container}>
+      {/* Welcome Section */}
       <View style={styles.header}>
         <Text style={styles.title}>Welcome to AgroGPT</Text>
-        <Text style={styles.subtitle}>Your Smart Farming Assistant</Text>
+        <Text style={styles.subtitle}>
+          Your AI-powered farming assistant
+        </Text>
       </View>
-      
-      <View style={styles.grid}>
-        {menuItems.map((item, index) => (
+
+      {/* Features Grid */}
+      <View style={styles.featuresGrid}>
+        {features.map((feature, index) => (
           <TouchableOpacity
             key={index}
-            style={[
-              styles.card,
-              { width: width / 2 - 24 }, // Accounting for margins
-              { backgroundColor: item.color }
-            ]}
-            onPress={() => navigation.navigate(item.screen)}
+            style={styles.featureCard}
+            onPress={() => navigation.navigate(feature.screen as keyof RootStackParamList)}
           >
-            <Icon name={item.icon} size={40} color="#fff" />
-            <Text style={styles.cardText}>{item.title}</Text>
+            <Text style={styles.featureIcon}>{feature.icon}</Text>
+            <Text style={styles.featureTitle}>{feature.title}</Text>
+            <Text style={styles.featureDescription}>
+              {feature.description}
+            </Text>
           </TouchableOpacity>
         ))}
+      </View>
+
+      {/* Quick Actions */}
+      <View style={styles.quickActions}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => navigation.navigate('Profile')}
+        >
+          <Text style={styles.actionButtonText}>View Profile</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -82,52 +87,72 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6', // gray-100
+    backgroundColor: '#f9fafb',
   },
   header: {
     padding: 20,
-    backgroundColor: '#22c55e', // green-600
+    backgroundColor: '#16a34a',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
+    color: '#ffffff',
+    marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#fff',
-    textAlign: 'center',
-    marginTop: 8,
+    color: '#ffffff',
+    opacity: 0.8,
   },
-  grid: {
+  featuresGrid: {
+    padding: 16,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    padding: 8,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
-  card: {
-    height: 150,
-    margin: 8,
+  featureCard: {
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     padding: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 3,
+    marginBottom: 16,
+    width: '48%',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  cardText: {
-    color: '#fff',
+  featureIcon: {
+    fontSize: 32,
+    marginBottom: 8,
+  },
+  featureTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginTop: 12,
-    textAlign: 'center',
+    marginBottom: 4,
+    color: '#1f2937',
+  },
+  featureDescription: {
+    fontSize: 14,
+    color: '#6b7280',
+  },
+  quickActions: {
+    padding: 16,
+    marginBottom: 20,
+  },
+  actionButton: {
+    backgroundColor: '#16a34a',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  actionButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

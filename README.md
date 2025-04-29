@@ -1,73 +1,99 @@
-# AgroGPT-Uganda
+# AgroGPT Uganda
 
-An AI-powered agricultural assistant for Ugandan farmers, providing localized insights and support for farming practices, weather patterns, pest control, and market information.
+An AI-powered agricultural assistant for Ugandan farmers, providing disease diagnosis, weather forecasts, market prices, and farming recommendations.
 
 ## Features
 
-- Plant disease diagnosis from images
-- Localized planting and harvesting calendars
-- Sustainable farming practice recommendations
-- Market price tracking and buyer connections
-- Multi-language support (English, Luganda, Runyankole, Acholi)
-- SMS/USSD interface for farmers without internet access
-- Real-time weather data integration
-- User profiles for different stakeholders
+- 🌱 Crop Disease Diagnosis using Computer Vision
+- 🌦️ Weather Forecasting with Agricultural Metrics
+- 💰 Market Price Analysis and Predictions
+- 📅 Smart Planting Calendar
+- 🌍 Multi-language Support (English, Luganda, Runyankole, Acholi)
+- 📱 USSD Interface for Feature Phones
 
 ## Tech Stack
 
-- Backend: Python/FastAPI
-- Frontend: React/Next.js
+- Backend: FastAPI, Python
+- ML: PyTorch, scikit-learn
 - Mobile: React Native
-- Database: PostgreSQL + Redis
-- AI/ML: PyTorch
-- SMS/USSD: Local telecom integration
-
-## Project Structure
-
-```
-agrogpt-uganda/
-├── backend/           # FastAPI backend
-├── frontend/          # Next.js frontend
-├── mobile/           # React Native mobile app
-├── ml/               # Machine learning models
-├── docs/             # Documentation
-└── scripts/          # Utility scripts
-```
+- Frontend: React.js
+- Database: PostgreSQL
 
 ## Setup Instructions
 
-1. Clone the repository
-2. Set up Python virtual environment:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/AgroGPT-Uganda.git
+   cd AgroGPT-Uganda
+   ```
+
+2. Create and activate a virtual environment:
    ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
-3. Install backend dependencies:
+
+3. Install dependencies:
    ```bash
-   cd backend
    pip install -r requirements.txt
    ```
-4. Install frontend dependencies:
+
+4. Set up environment variables:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
+
+5. Initialize the database:
+   ```bash
+   python scripts/init_db.py
+   ```
+
+6. Download ML models:
+   ```bash
+   python scripts/download_models.py
+   ```
+
+7. Start the backend server:
+   ```bash
+   cd backend
+   uvicorn main:app --reload
+   ```
+
+8. Start the frontend (in a new terminal):
    ```bash
    cd frontend
    npm install
+   npm start
    ```
-5. Set up environment variables (see .env.example)
-6. Run the development servers:
+
+9. Start the mobile app (in a new terminal):
    ```bash
-   # Backend
-   cd backend
-   uvicorn main:app --reload
-   
-   # Frontend
-   cd frontend
-   npm run dev
+   cd mobile
+   npm install
+   npm start
    ```
+
+## API Documentation
+
+Once the server is running, visit:
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
 
 ## Contributing
 
-Please read CONTRIBUTING.md for details on our code of conduct and the process for submitting pull requests.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Weather data provided by WeatherAPI
+- Market price data sourced from Uganda Bureau of Statistics
+- Disease classification model trained on [AgriVision dataset](https://www.kaggle.com/datasets/emmarex/plant-disease-detection-dataset) 
